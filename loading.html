@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+    }
+
+    .spinner-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    }
+
+    .spinner {
+      border: 12px solid #f3f3f3;
+      border-top: 12px solid #3498db;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      position: absolute;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <img src="logosmpn206.png" alt="Logo" class="logo">
+  </div>
+  <p>SMP 206</p>
+  <p>Loading...</p>
+
+  <script>
+    const { ipcRenderer } = require("electron");
+
+      async function userBlock(nisn, password) {
+          const response = await fetch("http://localhost/api/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+
+          if (data.token) {
+              localStorage.setItem("auth_token", data.token);
+              localStorage.setItem("role", data.role); // Simpan role
+              
+              if (data.role === "siswa") {
+                  ipcRenderer.send("start-blocking"); // Hanya blokir jika siswa
+              }
+          } else {
+              alert("Login gagal!");
+          }
+      }
+  </script>
+</body>
+</html>
