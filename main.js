@@ -95,19 +95,19 @@ app.whenReady().then(() => {
   // Tampilkan intro.html terlebih dahulu
   createWindow(`file://${path.join(__dirname, "intro.html")}`);
 
-  // Setelah 6 detik, pindah ke loading.html
+  // Setelah 6 detik, pindah ke loading.html (berikan cukup waktu untuk animasi intro)
   setTimeout(() => {
     if (win) {
       win.loadURL(`file://${path.join(__dirname, "loading.html")}`);
     }
 
-    // Setelah 3 detik di loading.html, pindah ke Laravel
+    // Setelah 3 detik di loading.html, pindah ke Laravel (berikan waktu untuk animasi loading)
     setTimeout(() => {
       if (win) {
         win.loadURL("http://127.0.0.1:8000");
       }
-    }, 3000);
-  }, 6000);
+    }, 3000); // Durasi loading (misalnya 3 detik untuk loading)
+  }, 9000); // Durasi intro (misalnya 6 detik untuk intro)
 
   handleExitShortcut();
   blockAllShortcuts();
